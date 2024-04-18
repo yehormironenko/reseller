@@ -10,14 +10,17 @@ import (
 )
 
 // /search?book=book-name&author=x-author&genre=fiction
+type HandlerGetBook struct {
+	BookService service.BookService
+}
 
-func GetBook(c echo.Context) error {
+func (h HandlerGetBook) GetBook(c echo.Context) error {
 	book := c.QueryParam("book")
 	author := c.QueryParam("author")
 	genre := c.QueryParam("genre")
 	params := c.QueryParams()
 
-	response, err := service.GetBook(c, params)
+	response, err := h.BookService.GetBook(c, params)
 	if err != nil {
 		return c.String(http.StatusInternalServerError, "internal error")
 	}

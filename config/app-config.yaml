@@ -7,5 +7,5 @@ app:
     database: reseller
     tables:
       books: books
-    user: reseller
+    user: postgres
     password: 6282373

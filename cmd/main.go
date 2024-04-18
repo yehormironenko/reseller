@@ -9,7 +9,10 @@ import (
 	"github.com/labstack/gommon/log"
 
 	"reseller/config"
-	handlers2 "reseller/internal/controller/handlers"
+	"reseller/config/client"
+	"reseller/internal/controller/handlers"
+	"reseller/internal/repository"
+	"reseller/internal/service"
 )
 
 // 2 function search bookByName // GET with params
@@ -25,10 +28,18 @@ func main() {
 		return
 	}
 
-	//postgresClient := client.NewPostgresClient(cfg.Postgres)
+	postgresClient := client.NewPostgresClient(cfg.Postgres)
 
-	e.GET("/echo", handlers2.Echo)
-	e.GET("/search", handlers2.GetBook)
+	bookRepository := repository.NewBookRepository(postgresClient)
+
+	bookService := service.NewBookService(bookRepository)
+	/*	book := new(entities.Book)
+		res := postgresClient.NewSelect().Model(book).Where("id = ?", 1).Scan(context.Background())
+		fmt.Println(res, book)*/
+	handlerGB := &handlers.HandlerGetBook{BookService: bookService}
+
+	e.GET("/echo", handlers.Echo)
+	e.GET("/search", handlerGB.GetBook)
 
 	e.Logger.Fatal(e.Start(cfg.Server.Endpoint))
 }

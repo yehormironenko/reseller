@@ -1,19 +1,34 @@
 package client
 
 import (
-	"github.com/go-pg/pg/v10"
+	"database/sql"
+	"time"
+
+	"github.com/uptrace/bun"
+	"github.com/uptrace/bun/dialect/pgdialect"
+	"github.com/uptrace/bun/driver/pgdriver"
 
 	"reseller/config"
 )
 
-func NewPostgresClient(postgresqlConfig config.Postgres) *pg.DB {
-	return pg.Connect(&pg.Options{
-		User:     postgresqlConfig.DbUser,
-		Password: postgresqlConfig.DbPassword,
-		Database: postgresqlConfig.Database,
-		Addr:     postgresqlConfig.Endpoint,
-	})
-	// TODO check it  out
-	//defer db.Close()
+func NewPostgresClient(postgresqlConfig config.Postgres) *bun.DB {
+	sqldb := sql.OpenDB(createConnector(postgresqlConfig))
 
+	return bun.NewDB(sqldb, pgdialect.New())
+}
+
+func createConnector(postgresqlConfig config.Postgres) *pgdriver.Connector {
+	return pgdriver.NewConnector(
+		pgdriver.WithNetwork("tcp"),
+		pgdriver.WithAddr(postgresqlConfig.Endpoint),
+		pgdriver.WithTLSConfig(nil),
+		pgdriver.WithUser(postgresqlConfig.DbUser),
+		pgdriver.WithPassword(postgresqlConfig.DbPassword),
+		pgdriver.WithDatabase(postgresqlConfig.Database),
+		pgdriver.WithApplicationName("reseller"),
+		pgdriver.WithTimeout(5*time.Second),
+		pgdriver.WithDialTimeout(5*time.Second),
+		pgdriver.WithReadTimeout(5*time.Second),
+		pgdriver.WithWriteTimeout(5*time.Second),
+	)
 }
