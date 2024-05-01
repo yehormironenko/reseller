@@ -33,9 +33,7 @@ func main() {
 	bookRepository := repository.NewBookRepository(postgresClient)
 
 	bookService := service.NewBookService(bookRepository)
-	/*	book := new(entities.Book)
-		res := postgresClient.NewSelect().Model(book).Where("id = ?", 1).Scan(context.Background())
-		fmt.Println(res, book)*/
+
 	handlerGB := &handlers.HandlerGetBook{BookService: bookService}
 
 	e.GET("/echo", handlers.Echo)

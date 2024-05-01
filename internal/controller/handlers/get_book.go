@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -15,9 +14,6 @@ type HandlerGetBook struct {
 }
 
 func (h HandlerGetBook) GetBook(c echo.Context) error {
-	book := c.QueryParam("book")
-	author := c.QueryParam("author")
-	genre := c.QueryParam("genre")
 	params := c.QueryParams()
 
 	response, err := h.BookService.GetBook(c, params)
@@ -25,7 +21,5 @@ func (h HandlerGetBook) GetBook(c echo.Context) error {
 		return c.String(http.StatusInternalServerError, "internal error")
 	}
 
-	fmt.Println(response)
-
-	return c.String(http.StatusOK, fmt.Sprintf("book %s, author %s, genre %s", book, author, genre))
+	return c.JSON(http.StatusOK, response)
 }

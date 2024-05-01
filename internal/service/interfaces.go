@@ -9,5 +9,5 @@ import (
 )
 
 type Action interface {
-	GetBook(c echo.Context, args url.Values) (model.Book, error)
+	GetBook(c echo.Context, args url.Values) (model.Books, error)
 }

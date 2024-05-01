@@ -2,6 +2,8 @@ package entities
 
 import "github.com/uptrace/bun"
 
+type Books []Book
+
 type Book struct {
 	bun.BaseModel `bun:"table:books,alias:b"`
 

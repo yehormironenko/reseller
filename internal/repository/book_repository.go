@@ -1,8 +1,12 @@
 package repository
 
-import "reseller/internal/repository/entities"
+import (
+	"github.com/labstack/echo/v4"
+
+	"reseller/internal/repository/entities"
+)
 
 type BookRepositoryInterface interface {
-	GetBookByParams(...string) (entities.Book, error)
-	//buy
+	GetBookByParams(c echo.Context, bookname, author, genre string) (entities.Book, error)
+	// TODO buy
 }
