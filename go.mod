@@ -1,4 +1,4 @@
-module reseller
+module github.com/yehormironenko/reseller
 
 go 1.22
 

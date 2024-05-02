@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"reseller/internal/service"
+	"github.com/yehormironenko/reseller/internal/service"
 )
 
 // /search?book=book-name&author=x-author&genre=fiction

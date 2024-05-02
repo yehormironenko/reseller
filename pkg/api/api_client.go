@@ -9,7 +9,7 @@ import (
 
 	fastshot "github.com/opus-domini/fast-shot"
 
-	"reseller/pkg/model"
+	"github.com/yehormironenko/reseller/pkg/model"
 )
 
 type ResellerApiClient interface {

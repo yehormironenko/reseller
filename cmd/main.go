@@ -8,11 +8,11 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
 
-	"reseller/config"
-	"reseller/config/client"
-	"reseller/internal/controller/handlers"
-	"reseller/internal/repository"
-	"reseller/internal/service"
+	"github.com/yehormironenko/reseller/config"
+	"github.com/yehormironenko/reseller/config/client"
+	"github.com/yehormironenko/reseller/internal/controller/handlers"
+	"github.com/yehormironenko/reseller/internal/repository"
+	"github.com/yehormironenko/reseller/internal/service"
 )
 
 // 2 function search bookByName // GET with params

@@ -5,9 +5,9 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"reseller/internal/repository"
-	"reseller/internal/repository/entities"
-	"reseller/pkg/model"
+	"github.com/yehormironenko/reseller/internal/repository"
+	"github.com/yehormironenko/reseller/internal/repository/entities"
+	"github.com/yehormironenko/reseller/pkg/model"
 )
 
 type BookService struct {

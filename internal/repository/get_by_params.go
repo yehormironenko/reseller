@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/uptrace/bun"
 
-	"reseller/internal/repository/entities"
+	"github.com/yehormironenko/reseller/internal/repository/entities"
 )
 
 type BookRepository struct {

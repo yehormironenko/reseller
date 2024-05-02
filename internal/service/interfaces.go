@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"reseller/pkg/model"
+	"github.com/yehormironenko/reseller/pkg/model"
 )
 
 type Action interface {

@@ -3,7 +3,7 @@ package repository
 import (
 	"github.com/labstack/echo/v4"
 
-	"reseller/internal/repository/entities"
+	"github.com/yehormironenko/reseller/internal/repository/entities"
 )
 
 type BookRepositoryInterface interface {

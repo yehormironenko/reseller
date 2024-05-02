@@ -8,7 +8,7 @@ import (
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
 
-	"reseller/config"
+	"github.com/yehormironenko/reseller/config"
 )
 
 func NewPostgresClient(postgresqlConfig config.Postgres) *bun.DB {
