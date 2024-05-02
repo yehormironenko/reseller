@@ -17,14 +17,12 @@ type ResellerApiClient interface {
 }
 
 type resellerApiClient struct {
-	BaseUrl    string
-	HttpClient fastshot.Client
+	HttpClient fastshot.ClientHttpMethods
 }
 
-func NewResellerApiClient(baseUrl string, httpClient fastshot.Client) ResellerApiClient {
+func NewResellerApiClient(baseUrl string) ResellerApiClient {
 	return &resellerApiClient{
-		BaseUrl:    baseUrl,
-		HttpClient: httpClient,
+		HttpClient: fastshot.DefaultClient(baseUrl),
 	}
 }
 
@@ -32,7 +30,7 @@ func (r resellerApiClient) GetBookByParams(ctx context.Context, bookname, author
 
 	log.Info("GetBookByParams request with params ", bookname, author, genre)
 
-	response, err := r.HttpClient.GET(r.BaseUrl).Context().
+	response, err := r.HttpClient.GET("search").Context().
 		Set(ctx).Query().
 		SetParams(map[string]string{"book": bookname, "author": author, "genre": genre}).
 		Send()
