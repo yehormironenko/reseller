@@ -13,7 +13,7 @@ import (
 )
 
 type ResellerApiClient interface {
-	GetBookByParams(ctx context.Context, bookname, author, genre string) (model.Books, error)
+	GetBookByParams(ctx context.Context, bookname, author, genre string) (model.Books, string, error)
 }
 
 type resellerApiClient struct {
@@ -26,7 +26,7 @@ func NewResellerApiClient(baseUrl string) ResellerApiClient {
 	}
 }
 
-func (r resellerApiClient) GetBookByParams(ctx context.Context, bookname, author, genre string) (model.Books, error) {
+func (r resellerApiClient) GetBookByParams(ctx context.Context, bookname, author, genre string) (model.Books, string, error) {
 
 	log.Info("GetBookByParams request with params ", bookname, author, genre)
 
@@ -36,14 +36,14 @@ func (r resellerApiClient) GetBookByParams(ctx context.Context, bookname, author
 		Send()
 
 	if err != nil {
-		return model.Books{}, err
+		return model.Books{}, "", err
 	}
 
 	var responseModel model.Books
 
 	if err = jsoniter.NewDecoder(response.RawResponse.Body).Decode(&responseModel); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response")
+		return nil, response.Status(), fmt.Errorf("failed to unmarshal response")
 	}
 
-	return responseModel, nil
+	return responseModel, response.Status(), nil
 }
