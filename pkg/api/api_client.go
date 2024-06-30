@@ -28,7 +28,7 @@ func NewResellerApiClient(baseUrl string) ResellerApiClient {
 
 func (r resellerApiClient) GetBookByParams(ctx context.Context, bookname, author, genre string) (model.Books, string, error) {
 
-	log.Info("GetBookByParams request with params ", bookname, author, genre)
+	log.Info("GetBookByParams request with params:", bookname, author, genre)
 
 	response, err := r.HttpClient.GET("search").Context().
 		Set(ctx).Query().
