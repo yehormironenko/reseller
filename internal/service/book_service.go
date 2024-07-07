@@ -32,6 +32,17 @@ func (bs BookService) GetBook(c echo.Context, arguments url.Values) (model.Books
 	return convertBooksToClientModel(books), nil
 }
 
+func (bs BookService) BuyBook(c echo.Context, books model.Books) (model.Books, error) {
+	c.Logger().Info("buyBook service")
+
+	repoBooks, err := bs.bookrepository.BuyBook(c, books)
+	if err != nil {
+		return model.Books{}, err
+	}
+
+	return convertBooksToClientModel(repoBooks), nil
+}
+
 func convertBooksToClientModel(books []entities.Book) []model.Book {
 	clientBooks := make([]model.Book, 0, len(books)) // Pre-allocate slice with capacity equal to the number of books
 

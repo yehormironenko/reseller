@@ -4,16 +4,9 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-
-	"github.com/yehormironenko/reseller/internal/service"
 )
 
-// /search?book=book-name&author=x-author&genre=fiction
-type HandlerGetBook struct {
-	BookService service.BookService
-}
-
-func (h HandlerGetBook) GetBook(c echo.Context) error {
+func (h HandlerWithService) GetBook(c echo.Context) error {
 	params := c.QueryParams()
 
 	response, err := h.BookService.GetBook(c, params)

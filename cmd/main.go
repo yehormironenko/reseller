@@ -34,10 +34,12 @@ func main() {
 
 	bookService := service.NewBookService(bookRepository)
 
-	handlerGB := &handlers.HandlerGetBook{BookService: bookService}
+	// custom handlers
+	handlerWithBookService := &handlers.HandlerWithService{BookService: bookService}
 
 	e.GET("/echo", handlers.Echo)
-	e.GET("/search", handlerGB.GetBook)
+	e.GET("/search", handlerWithBookService.GetBook)
+	e.POST("/buy", handlerWithBookService.BuyBook)
 
 	e.Logger.Fatal(e.Start(cfg.Server.Endpoint))
 }

@@ -10,4 +10,5 @@ import (
 
 type Action interface {
 	GetBook(c echo.Context, args url.Values) (model.Books, error)
+	BuyBook(c echo.Context, books model.Books) (model.Books, error)
 }

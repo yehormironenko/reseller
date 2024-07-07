@@ -47,3 +47,23 @@ func (r resellerApiClient) GetBookByParams(ctx context.Context, bookname, author
 
 	return responseModel, response.Status(), nil
 }
+
+func (r resellerApiClient) BuyBook(ctx context.Context, request model.Books) (model.Books, string, error) {
+
+	log.Info("BuyBook request :", request)
+
+	response, err := r.HttpClient.POST("buy").Context().
+		Set(ctx).Body().AsJSON(request).Send()
+
+	if err != nil {
+		return model.Books{}, "", err
+	}
+
+	var responseModel model.Books
+
+	if err = jsoniter.NewDecoder(response.RawResponse.Body).Decode(&responseModel); err != nil {
+		return nil, response.Status(), fmt.Errorf("failed to unmarshal response")
+	}
+
+	return responseModel, response.Status(), nil
+}
