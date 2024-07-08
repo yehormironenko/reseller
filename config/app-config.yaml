@@ -1,6 +1,6 @@
 app:
   server:
-    endpoint: 127.0.0.1:1323
+    endpoint: 0.0.0.0:1323
 
   postgres:
     endpoint: 127.0.0.1:5432

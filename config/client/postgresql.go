@@ -2,6 +2,7 @@ package client
 
 import (
 	"database/sql"
+	"os"
 	"time"
 
 	"github.com/uptrace/bun"
@@ -18,7 +19,7 @@ func NewPostgresClient(postgresqlConfig config.Postgres) *bun.DB {
 }
 
 func createConnector(postgresqlConfig config.Postgres) *pgdriver.Connector {
-	return pgdriver.NewConnector(
+	connector := pgdriver.NewConnector(
 		pgdriver.WithNetwork("tcp"),
 		pgdriver.WithAddr(postgresqlConfig.Endpoint),
 		pgdriver.WithTLSConfig(nil),
@@ -31,4 +32,11 @@ func createConnector(postgresqlConfig config.Postgres) *pgdriver.Connector {
 		pgdriver.WithReadTimeout(5*time.Second),
 		pgdriver.WithWriteTimeout(5*time.Second),
 	)
+	// trick for docker
+	dbHost := os.Getenv("DB_HOST")
+	if dbHost == "postgres" {
+		connector.Config().Addr = "postgres:5432"
+	}
+
+	return connector
 }

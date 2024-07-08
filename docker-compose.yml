@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  reseller:
+    build: ./
+    container_name: go_reseller
+    ports:
+      - "1323:1323"
+    depends_on:
+      - postgres
+    networks:
+      - reseller-network
+    environment:
+      - DB_HOST=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:1323/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  postgres:
+    image: postgres:14-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-scripts/initDB.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_PASSWORD=6282373
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=reseller
+    networks:
+      - reseller-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  reseller-network:
+    driver: bridge
