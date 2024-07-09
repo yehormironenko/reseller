@@ -20,6 +20,7 @@ import (
 func main() {
 	e := echo.New()
 	e.Logger.SetLevel(log.INFO)
+	e.Logger.SetPrefix("reseller")
 	e.Use(middleware.Logger())
 
 	cfg, err := loadConfig()
