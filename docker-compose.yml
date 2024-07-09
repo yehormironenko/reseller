@@ -27,7 +27,7 @@ services:
       - ./init-scripts/initDB.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - POSTGRES_PASSWORD=6282373
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=rslr
       - POSTGRES_DB=reseller
     networks:
       - reseller-network
